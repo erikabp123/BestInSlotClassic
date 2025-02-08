@@ -81,7 +81,8 @@ function BIS:CreateSettingsInterface()
 
     BIS:SetValues();
 
-    InterfaceOptions_AddCategory(settings);
+    local category = Settings.RegisterCanvasLayoutCategory(settings, "BestInSlotClassic")
+    Settings.RegisterAddOnCategory(category)
 end
 
 function BIS:SetValues()    

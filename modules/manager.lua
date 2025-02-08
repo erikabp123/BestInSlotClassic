@@ -276,8 +276,11 @@ local function ResetUI()
             twoHands = false;
         end
 
-        BIS:UpdateIcon("frame_ONE_HAND", GetItemIcon(oneHandIcon), nil);
-        BIS:UpdateIcon("frame_TWO_HANDS", GetItemIcon(twoHandsIcon), nil);
+        if oneHandIcon ~= nil then
+            BIS:UpdateIcon("frame_ONE_HAND", GetItemIcon(oneHandIcon), nil);
+        elseif twoHandsIcon ~= nil then
+            BIS:UpdateIcon("frame_TWO_HANDS", GetItemIcon(twoHandsIcon), nil);
+        end
 
         for idx, value in pairs(magicResistances.NAME) do
             if selectedMagicResist == idx then                
@@ -305,7 +308,7 @@ end
 
 local function characterHasBag(bagName)
     for i = 1, 4 do
-        if GetBagName(i) == bagName then
+        if C_Container.GetBagName(i) == bagName then
             return true;
         end
     end
@@ -318,8 +321,8 @@ local function characterHasItem(itemId)
 		hasItem = true;
 	else
 		for i = 0, NUM_BAG_SLOTS do
-		    for z = 1, GetContainerNumSlots(i) do
-		        if GetContainerItemID(i, z) == itemId then
+		    for z = 1, C_Container.GetContainerNumSlots(i) do
+		        if C_Container.GetContainerItemID(i, z) == itemId then
 		        	hasItem = true;
 		            break
 		        end

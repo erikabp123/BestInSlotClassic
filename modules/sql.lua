@@ -4,8 +4,8 @@ local function characterHasItem(itemId)
     hasItem = true;
   else
     for i = 0, NUM_BAG_SLOTS do
-      for z = 1, GetContainerNumSlots(i) do
-          if GetContainerItemID(i, z) == itemId then
+      for z = 1, C_Container.GetContainerNumSlots(i) do
+          if C_Container.GetContainerItemID(i, z) == itemId then
             hasItem = true;
               break
           end
