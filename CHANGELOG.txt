@@ -1,3 +1,6 @@
+# 2.5.5 (12-02-2025) - Technical update
+- Update out of date APIs
+
 # 2.5.4 (06-12-2021) - Technical update
 - Fix LUA error on load (backdrop template)
 - Fix LUA error on quest completion retrieval
