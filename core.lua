@@ -118,8 +118,7 @@ function BIS:LoadPlayerInfo()
     BIS:logmsg("Num Talent Tabs: "..numTalentTabs, LVL_DEBUG);
 
     for idx=1, numTalentTabs, 1 do
-        local name, texture, pointsSpent, fileName = GetTalentTabInfo(idx);
-        talentsPoints[idx] = tonumber(pointsSpent);
+        local name, texture, _, _, pointsSpent, fileName = GetTalentTabInfo(idx);
         if(tonumber(pointsSpent) > maxPoints) then
             spec = fileName;
             maxPoints = tonumber(pointsSpent);
