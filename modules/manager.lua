@@ -3,7 +3,7 @@
 local window;
 local visible;
 local dropdownRace, dropdownClass, dropdownSpec, dropdownPhase;
-local selectedRace, selectedClass, selectedSpec, selectedRank, selectedMagicResist;
+local selectedRace, selectedClass, selectedSpec, selectedPhase, selectedRank, selectedMagicResist;
 local pvp, twoHands, worldBoss, raid;
 
 local rootPaperDoll = "Interface\\PaperDoll\\";                
@@ -165,7 +165,7 @@ local function ResetUI()
     local oneHandIcon, twoHandsIcon;
 
     for idx, phase in ipairs(phases.NAME) do        
-        _G["frame_PHASE_"..phases.VALUE[idx].."_ICON"]:SetDesaturated(BestInSlotClassicDB.manager.selectedPhase ~= phases.VALUE[idx]);
+        _G["frame_PHASE_"..phases.VALUE[idx].."_ICON"]:SetDesaturated(selectedPhase ~= phases.VALUE[idx]);
     end
 
     for key, value in pairs(characterFrames.NAME) do
@@ -336,7 +336,7 @@ local function Update()
     -- Reset Icons.
     ResetUI();
 
-    if selectedRace == nil or selectedClass == nil or selectedSpec == nil or BestInSlotClassicDB.manager.selectedPhase == nil or selectedMagicResist == nil then
+    if selectedRace == nil or selectedClass == nil or selectedSpec == nil or selectedPhase == nil or selectedMagicResist == nil then
         -- Nothing to be updated.
         return;
     end
@@ -345,15 +345,15 @@ local function Update()
     local count = 0;
     
     if selectedMagicResist == 1 then        
-        BIS:logmsg("Searching for BIS items with the following settings Race Idx ("..selectedRace.."), Class Idx ("..selectedClass.."), Phase Idx ("..BestInSlotClassicDB.manager.selectedPhase.."), Spec Idx ("..selectedSpec..").", LVL_DEBUG);
-        temp = BIS:SearchBis(faction, selectedRace, selectedClass, BestInSlotClassicDB.manager.selectedPhase, selectedSpec, nil, twoHands, raid, worldBoss, pvp, selectedRank - 4, nil);
-        BIS:logmsg("Searching for BIS enchants with the following settings Class Idx ("..selectedClass.."), Phase Idx ("..BestInSlotClassicDB.manager.selectedPhase.."), Spec Idx ("..selectedSpec..").", LVL_DEBUG);
-        temp_enchant = BIS:SearchBisEnchant(selectedClass, BestInSlotClassicDB.manager.selectedPhase, selectedSpec, nil, raid, twoHands);
+        BIS:logmsg("Searching for BIS items with the following settings Race Idx ("..selectedRace.."), Class Idx ("..selectedClass.."), Phase Idx ("..selectedPhase.."), Spec Idx ("..selectedSpec..").", LVL_DEBUG);
+        temp = BIS:SearchBis(faction, selectedRace, selectedClass, selectedPhase, selectedSpec, nil, twoHands, raid, worldBoss, pvp, selectedRank - 4, nil);
+        BIS:logmsg("Searching for BIS enchants with the following settings Class Idx ("..selectedClass.."), Phase Idx ("..selectedPhase.."), Spec Idx ("..selectedSpec..").", LVL_DEBUG);
+        temp_enchant = BIS:SearchBisEnchant(selectedClass, selectedPhase, selectedSpec, nil, raid, twoHands);
     else        
-        BIS:logmsg("Searching for BIS items with the following settings Race Idx ("..selectedRace.."), Class Idx ("..selectedClass.."), Phase Idx ("..BestInSlotClassicDB.manager.selectedPhase.."), Spec Idx ("..BIS_dataSpecs[selectedClass].MAGIC_RESISTANCE[selectedSpec][selectedMagicResist]..").", LVL_DEBUG);
-        temp = BIS:SearchBis(faction, selectedRace, selectedClass, BestInSlotClassicDB.manager.selectedPhase, BIS_dataSpecs[selectedClass].MAGIC_RESISTANCE[selectedSpec][selectedMagicResist], nil, twoHands, raid, worldBoss, pvp, selectedRank - 4, nil);
-        BIS:logmsg("Searching for BIS enchants with the following settings Class Idx ("..selectedClass.."), Phase Idx ("..BestInSlotClassicDB.manager.selectedPhase.."), Spec Idx ("..BIS_dataSpecs[selectedClass].MAGIC_RESISTANCE[selectedSpec][selectedMagicResist]..").", LVL_DEBUG);
-        temp_enchant = BIS:SearchBisEnchant(selectedClass, BestInSlotClassicDB.manager.selectedPhase, BIS_dataSpecs[selectedClass].MAGIC_RESISTANCE[selectedSpec][selectedMagicResist], nil, raid, twoHands);
+        BIS:logmsg("Searching for BIS items with the following settings Race Idx ("..selectedRace.."), Class Idx ("..selectedClass.."), Phase Idx ("..selectedPhase.."), Spec Idx ("..BIS_dataSpecs[selectedClass].MAGIC_RESISTANCE[selectedSpec][selectedMagicResist]..").", LVL_DEBUG);
+        temp = BIS:SearchBis(faction, selectedRace, selectedClass, selectedPhase, BIS_dataSpecs[selectedClass].MAGIC_RESISTANCE[selectedSpec][selectedMagicResist], nil, twoHands, raid, worldBoss, pvp, selectedRank - 4, nil);
+        BIS:logmsg("Searching for BIS enchants with the following settings Class Idx ("..selectedClass.."), Phase Idx ("..selectedPhase.."), Spec Idx ("..BIS_dataSpecs[selectedClass].MAGIC_RESISTANCE[selectedSpec][selectedMagicResist]..").", LVL_DEBUG);
+        temp_enchant = BIS:SearchBisEnchant(selectedClass, selectedPhase, BIS_dataSpecs[selectedClass].MAGIC_RESISTANCE[selectedSpec][selectedMagicResist], nil, raid, twoHands);
     end
     
     
@@ -480,11 +480,12 @@ end
 
 local function HandlePhasesIcon(self)
     local phase = tonumber(self:GetName():match("[^_]+_[^_]+_([^_]+)"));
-    if BestInSlotClassicDB.manager.selectedPhase == phase then
+    if selectedPhase == phase then
         return;
     end
 
-    BestInSlotClassicDB.manager.selectedPhase = phase;
+    selectedPhase = phase;
+    BestInSlotClassicDB.manager.selectedPhase = selectedPhase;
     Update();
 end
 
@@ -496,7 +497,7 @@ local function HandleRacesIcon(self)
     selectedRace = raceId;
     selectedClass = nil;
     selectedSpec = nil;
-    selectedMagicResist = 1;    
+    selectedMagicResist = BestInSlotClassicDB.manager.selectedMagicResistForClass[selectedClass] or 1;
     Update();
 end
 
@@ -511,7 +512,7 @@ local function HandleClassIcon(self)
     else
         selectedSpec = nil;
     end
-    selectedMagicResist = 1;
+    selectedMagicResist = BestInSlotClassicDB.manager.selectedMagicResistForClass[selectedClass] or 1;
     Update();
 end
 
@@ -522,7 +523,7 @@ local function HandleSpecIcon(self)
     end
     selectedSpec = specName;
     BestInSlotClassicDB.manager.selectedSpecForClass[selectedClass] = selectedSpec;
-    selectedMagicResist = 1;
+    selectedMagicResist = BestInSlotClassicDB.manager.selectedMagicResistForClass[selectedClass] or 1;
     Update();
 end
 
@@ -561,6 +562,7 @@ local function HandleMagicIcon(self)
         return;
     end
     selectedMagicResist = magicResist;
+    BestInSlotClassicDB.manager.selectedMagicResistForClass[selectedClass] = selectedMagicResist;
     Update();
 end
 
@@ -655,7 +657,13 @@ function BIS:ShowManager()
             selectedSpec = BIS_specsFileToSpecs[spec][2];
             BestInSlotClassicDB.manager.selectedSpecForClass[selectedClass] = selectedSpec;
         end
-        selectedMagicResist = 1;        
+        selectedPhase = BestInSlotClassicDB.manager.selectedPhase;
+        if BestInSlotClassicDB.manager.selectedMagicResistForClass[selectedClass] ~= nil then
+            selectedMagicResist = BestInSlotClassicDB.manager.selectedMagicResistForClass[selectedClass];
+        else
+            selectedMagicResist = 1;
+            BestInSlotClassicDB.manager.selectedMagicResistForClass[selectedClass] = selectedMagicResist;
+        end
         if BestInSlotClassicDB.filter.pvprank == nil then
             if pvpRank == 0 then
                 selectedRank = 3;

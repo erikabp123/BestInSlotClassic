@@ -72,6 +72,10 @@ local function SetManagerDefaults()
     if BestInSlotClassicDB.manager.selectedSpecForClass == nil then
         BestInSlotClassicDB.manager.selectedSpecForClass = {};
     end
+
+    if BestInSlotClassicDB.manager.selectedMagicResistForClass == nil then
+        BestInSlotClassicDB.manager.selectedMagicResistForClass = {};
+    end
 end
 
 local function SetDefaults()
