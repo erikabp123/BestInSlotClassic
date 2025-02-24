@@ -20,7 +20,7 @@ Supported lists are:
 | Warlock  | Yes  |  Yes  |  Yes  |  Yes  | Yes  | Yes  |
 | Druid  | Yes  |  Yes  |  Yes  |  Yes  | Yes  | Yes  |
 
-You can find this add-on on curse: https://www.curseforge.com/wow/addons/best-in-slot-classic/
+You can find this add-on on curse: https://www.curseforge.com/wow/addons/best-in-slot-classic-anniversary-updated-bis
 
 # Reporting an issue #
 

@@ -1,6 +1,10 @@
 BIS = {};
 
 local function SetMinimapDefaults()
+    if BestInSlotClassicDB.minimap == nil then
+        BestInSlotClassicDB.minimap = {};
+    end
+
     if BestInSlotClassicDB.minimap.hide == nil then
         BestInSlotClassicDB.minimap.hide = false;
     end
@@ -56,18 +60,26 @@ local function SetFilterDefaults()
     end
 end
 
+local function SetManagerDefaults()
+    if BestInSlotClassicDB.manager == nil then
+        BestInSlotClassicDB.manager = {};
+    end
+
+    if BestInSlotClassicDB.manager.selectedPhase == nil then
+        BestInSlotClassicDB.manager.selectedPhase = bis_currentPhaseId;
+    end
+end
+
 local function SetDefaults()
     if BestInSlotClassicDB == nil then
         -- First time loading add-on.
         BestInSlotClassicDB = {};
-        BestInSlotClassicDB.minimap = {};
-        BestInSlotClassicDB.loglevel = nil;
-        BestInSlotClassicDB.options = {};
     end
     SetMinimapDefaults();
     SetLogLevelDefaults();
     SetFilterDefaults();
     SetTooltipDefaults();
+    SetManagerDefaults();
 end
 
 function BIS:ResetDefaults()

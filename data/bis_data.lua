@@ -7011,7 +7011,6 @@ table.insert(BIS_LINKS, {ClassId = 9, SpecId = 1, ItemId = 16807, Priority = 19,
 table.insert(BIS_LINKS, {ClassId = 9, SpecId = 1, ItemId = 16808, Priority = 17, OffHand = false, Races = nil, SuffixId = 0 });
 table.insert(BIS_LINKS, {ClassId = 9, SpecId = 1, ItemId = 16809, Priority = 19, OffHand = false, Races = nil, SuffixId = 0 });
 table.insert(BIS_LINKS, {ClassId = 9, SpecId = 1, ItemId = 16810, Priority = 12, OffHand = false, Races = nil, SuffixId = 0 });
-table.insert(BIS_LINKS, {ClassId = 9, SpecId = 1, ItemId = 16915, Priority = 8, OffHand = false, Races = nil, SuffixId = 0 });
 table.insert(BIS_LINKS, {ClassId = 9, SpecId = 1, ItemId = 16927, Priority = 10, OffHand = false, Races = nil, SuffixId = 0 });
 table.insert(BIS_LINKS, {ClassId = 9, SpecId = 1, ItemId = 16928, Priority = 8, OffHand = false, Races = nil, SuffixId = 0 });
 table.insert(BIS_LINKS, {ClassId = 9, SpecId = 1, ItemId = 16929, Priority = 12, OffHand = false, Races = nil, SuffixId = 0 });
