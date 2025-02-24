@@ -506,7 +506,11 @@ local function HandleClassIcon(self)
         return;
     end
     selectedClass = classId;
-    selectedSpec = nil;
+    if BestInSlotClassicDB.manager.selectedSpecForClass[selectedClass] ~= nil then
+        selectedSpec = BestInSlotClassicDB.manager.selectedSpecForClass[selectedClass];
+    else
+        selectedSpec = nil;
+    end
     selectedMagicResist = 1;
     Update();
 end
@@ -517,6 +521,7 @@ local function HandleSpecIcon(self)
         return;
     end
     selectedSpec = specName;
+    BestInSlotClassicDB.manager.selectedSpecForClass[selectedClass] = selectedSpec;
     selectedMagicResist = 1;
     Update();
 end
@@ -644,10 +649,11 @@ function BIS:ShowManager()
         visible = false;
         selectedRace = RACES_IDX[race];
         selectedClass = CLASS_IDX[class];
-        if spec == "Unknown" then
-            selectedSpec = nil;
-        else
+        if BestInSlotClassicDB.manager.selectedSpecForClass[selectedClass] ~= nil then
+            selectedSpec = BestInSlotClassicDB.manager.selectedSpecForClass[selectedClass];
+        elseif spec ~= "Unknown" then
             selectedSpec = BIS_specsFileToSpecs[spec][2];
+            BestInSlotClassicDB.manager.selectedSpecForClass[selectedClass] = selectedSpec;
         end
         selectedMagicResist = 1;        
         if BestInSlotClassicDB.filter.pvprank == nil then

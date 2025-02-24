@@ -1,6 +1,7 @@
 # 2.5.6 (24-02-2025) - BIS list fix
 - Remove Netherwind pants from lock BIS list
 - Remember previously selected phase number for character
+- Remember previously selected spec/class combos for character
 
 # 2.5.5 (12-02-2025) - Technical update
 - Update out of date APIs

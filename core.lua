@@ -68,6 +68,10 @@ local function SetManagerDefaults()
     if BestInSlotClassicDB.manager.selectedPhase == nil then
         BestInSlotClassicDB.manager.selectedPhase = bis_currentPhaseId;
     end
+
+    if BestInSlotClassicDB.manager.selectedSpecForClass == nil then
+        BestInSlotClassicDB.manager.selectedSpecForClass = {};
+    end
 end
 
 local function SetDefaults()
