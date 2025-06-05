@@ -143,6 +143,7 @@ function BIS:LoadPlayerInfo()
             spec = fileName;
             maxPoints = tonumber(pointsSpent);
         end
+        talentsPoints[idx] = tonumber(pointsSpent)
         BIS:logmsg(name..": "..pointsSpent..", "..fileName, LVL_DEBUG);
     end
 
