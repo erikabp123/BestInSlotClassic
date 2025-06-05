@@ -1,3 +1,6 @@
+# 2.5.7 (05-06-2025) - Warrior spec detection fix
+- Fixes issue with detecting warrior spec which causes the addon to not work for warriors
+
 # 2.5.6 (24-02-2025) - BIS list fix
 - Remove Netherwind pants from lock BIS list
 - Remember previously selected phase number for character

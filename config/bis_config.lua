@@ -1,5 +1,5 @@
 -- Version Info.
-VERSION = "2.5.6";
+VERSION = "2.5.7";
 
 -- Default Icon Size.
 bis_defaultIconSize = 16;
